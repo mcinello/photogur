@@ -10,5 +10,12 @@
 <ul>
   <% @most_recent_pictures.each do |picture| %>
     <li><%= picture.title %></li>
+    <img src="<%= picture.url %>">
   <% end %>
 </ul>
+
+<h1>Last month's pictures</h1>
+  <% @older_pictures.each do |picture| %>
+    <li><%=picture.title %></li>
+    <img src="<%= picture.url %>">
+  <% end %>
