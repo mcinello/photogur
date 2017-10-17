@@ -3,19 +3,29 @@
 
 <% @pictures.each do |picture| %>
 <p><%= picture.title %>, <%= picture.artist %></p>
-<img src="<%= picture.url %>" alt="<%= picture.title %>">
+<img src="<%= picture.url %>" alt="<%= picture.title %>" />
 <% end %>
 
 <h1>Most recent pictures</h1>
 <ul>
   <% @most_recent_pictures.each do |picture| %>
     <li><%= picture.title %></li>
-    <img src="<%= picture.url %>">
+    <img src="<%= picture.url %>" />
   <% end %>
 </ul>
 
 <h1>Last month's pictures</h1>
+<ul>
   <% @older_pictures.each do |picture| %>
     <li><%=picture.title %></li>
-    <img src="<%= picture.url %>">
+    <img src="<%= picture.url %>" />
   <% end %>
+</ul>
+
+<h1>This year's pictures</h1>
+<ul>
+  <% @pictures_in_same_year.each do |picture| %>
+  <li><%= picture.title %></li>
+  <img src="<%= picture.url %>" />
+  <% end %>
+</ul>

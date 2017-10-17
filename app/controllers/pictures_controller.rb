@@ -3,6 +3,7 @@ class PicturesController < ApplicationController
     @most_recent_pictures = Picture.most_recent_five
     @pictures = Picture.all
     @older_pictures = Picture.created_before(1.month.ago)
+    @pictures_in_same_year = Picture.pictures_created_in_year(2017)
   end
 
   def show
