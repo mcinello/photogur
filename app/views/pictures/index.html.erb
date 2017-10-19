@@ -21,3 +21,11 @@
     <img src="<%= picture.url %>" />
   <% end %>
 </ul>
+
+<h1>This year's pictures</h1>
+<ul>
+  <% @pictures_in_same_year.each do |picture| %>
+  <li><%= picture.title %></li>
+  <img src="<%= picture.url %>" />
+  <% end %>
+</ul>
