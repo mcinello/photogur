@@ -17,8 +17,7 @@ class Picture < ApplicationRecord
   end
 
   def self.pictures_created_in_year(year)
-    # Picture.where("created_at LIKE ?", "%#{year}%")
-    Picture.newest_first.limit(5)
+    Picture.where("to_char(created_at, 'YYYY-MM-DD') LIKE ?", "%#{year}%")
   end
 
 end
