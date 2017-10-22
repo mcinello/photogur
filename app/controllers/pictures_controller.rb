@@ -1,5 +1,6 @@
 class PicturesController < ApplicationController
   before_action :ensure_logged_in, except: [:show, :index]
+  before_action :load_picture, only: [:show, :edit, :update, :destroy]
 
   def index
     @most_recent_pictures = Picture.most_recent_five
@@ -9,7 +10,7 @@ class PicturesController < ApplicationController
   end
 
   def show
-    @picture = Picture.find(params[:id])
+    load_picture
   end
 
   def new
@@ -34,27 +35,31 @@ class PicturesController < ApplicationController
   end
 
   def edit
-    @picture = Picture.find(params[:id])
+    load_picture
   end
 
   def update
-    @picture = Picture.find(params[:id])
+    load_picture
 
     @picture.title = params[:picture][:title]
-  @picture.artist = params[:picture][:artist]
+    @picture.artist = params[:picture][:artist]
     @picture.url = params[:picture][:url]
 
     if @picture.save
-      redirect_to '/pictures/#{@picture.id}'
+      redirect_to picture_path
     else
       render :edit
     end
   end
 
-def destroy
-  @picture = Picture.find(params[:id])
-  @picture.destroy
-  redirect_to "/pictures"
-end
+  def destroy
+    load_picture
+    @picture.destroy
+    redirect_to "/pictures"
+  end
+
+  def load_picture
+    @picture = Picture.find(params[:id])
+  end
 
 end
