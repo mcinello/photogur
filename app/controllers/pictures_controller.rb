@@ -1,6 +1,7 @@
 class PicturesController < ApplicationController
   before_action :ensure_logged_in, except: [:show, :index]
   before_action :load_picture, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_user_owns_picture, only: [:edit, :update, :destroy]
 
   def index
     @most_recent_pictures = Picture.most_recent_five
@@ -36,10 +37,12 @@ class PicturesController < ApplicationController
 
   def edit
     load_picture
+    ensure_user_owns_picture
   end
 
   def update
     load_picture
+    ensure_user_owns_picture
 
     @picture.title = params[:picture][:title]
     @picture.artist = params[:picture][:artist]
@@ -54,12 +57,21 @@ class PicturesController < ApplicationController
 
   def destroy
     load_picture
+    ensure_user_owns_picture
+
     @picture.destroy
     redirect_to "/pictures"
   end
 
   def load_picture
     @picture = Picture.find(params[:id])
+  end
+
+  def ensure_user_owns_picture
+    unless current_user == @picture.user
+      flash[:alert] = "Please log in"
+      redirect_to new_session_url
+    end
   end
 
 end
