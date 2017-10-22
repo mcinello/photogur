@@ -4,6 +4,8 @@ class Picture < ApplicationRecord
   validates :title, length: {in: 3..20}
   validates :url, uniqueness: true, format: {with: URI::regexp(%w(http)), :message => "Valid URL required"}
 
+  belongs_to :user
+
   def self.newest_first
     Picture.order("created_at DESC")
   end
@@ -17,7 +19,7 @@ class Picture < ApplicationRecord
   end
 
   def self.pictures_created_in_year(year)
-    Picture.where("cast(strftime('%Y', created_at) as int) = ?", year) 
+    Picture.where("cast(strftime('%Y', created_at) as int) = ?", year)
   end
 
 end
